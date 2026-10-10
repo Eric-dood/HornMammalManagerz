@@ -5,24 +5,30 @@
 #include <ctime>
 using namespace std;
 
+//Set up the global constants
 const int SIZE = 15, MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+//Set up the Goat class
 class Goat
 {
+    //Private variables
     private:
         int age;
         string name, color;
-        //Didn't use replit for this! All of those came up from my imagination, just so you know.
+        //NOTE: Didn't use replit for this! All of those came up from my imagination, just so you know.
+        //Set up the name arrays
         string names[SIZE] = {
             "Billy", "Jimmy", "Bimmy", "Jilly", "Hox",
             "Walt", "Geott", "Hally", "Geoffrey", "Pinky",
             "Two-horned", "Maximus", "Brownie", "Donut", "Poodle"
         };
+        //Set up the color arrays
         string colors[SIZE] = {
             "Blue", "Yellow", "Green", "Orange", "Red",
             "Turquoise", "Beige", "Black", "White", "Silver",
             "Golden", "Bronze", "Vantablack", "Chartreuse", "Pink"
         };
+    //Public variables
     public:
         //Setters
         void setAge(int a) { age = a; }
@@ -59,13 +65,17 @@ class Goat
         }
 };
 
+//Set up the DoublyLinkedList
 class DoublyLinkedList
 {
+    //Private variables
     private:
-        struct Node {
-            int data;
-            int age;
-            string name, color;
+        //Set up a Node structure
+        struct Node
+        {
+            int data; //Will be used for values
+            int age; //Used for goat's age
+            string name, color; //Used for goat's name & color
             Node* prev;
             Node* next;
             Node(int val, Goat myGoat = Goat(), Node* p = nullptr, Node* n = nullptr) {
@@ -78,35 +88,40 @@ class DoublyLinkedList
             }
         };
 
+        //Set up head & tail nodes
         Node* head;
         Node* tail;
 
     public:
-        // constructor
+        //Set up an empty constructor
         DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-        void push_back(Goat value) {
+        //Define push_back
+        void push_back(int value) {
+            //Set up a new node that'll be used for pushing the Goat elements back
             Node* newNode = new Node(value);
-            if (!tail)  // if there's no tail, the list is empty
+            if (!tail)  //If there's no tail, the list is empty
                 head = tail = newNode;
-            else {
+            else { //Otherwise insert the new node to the tail
                 tail->next = newNode;
                 newNode->prev = tail;
                 tail = newNode;
             }
         }
 
-        void push_front(Goat value) {
+        void push_front(int value) {
+            //Set up a new node that'll be used for pushing the Goat elements front
             Node* newNode = new Node(value);
-            if (!head)  // if there's no head, the list is empty
+            if (!head)  //If there's no head, the list is empty
                 head = tail = newNode;
-            else {
+            else { //Otherwise insert the new node to the head
                 newNode->next = head;
                 head->prev = newNode;
                 head = newNode;
             }
         }
 
+        //Define insert_after()
         void insert_after(int value, int position) {
             if (position < 0) {
                 cout << "Position must be >= 0." << endl;
@@ -138,6 +153,7 @@ class DoublyLinkedList
             temp->next = newNode;
         }
 
+        //Define delete_node()
         void delete_node(int value) {
             if (!head) return; // Empty list
 
@@ -162,28 +178,49 @@ class DoublyLinkedList
             delete temp;
         }
 
+        //Define print()
         void print() {
-            cout << "Forward:" << endl;
+            //Print out a message
+            cout << "Forward: ";
+            //Use a temporary node named current, starting from the head
             Node* current = head;
-            if (!current) return;
+            //If the list is empty, print a messsage that is empty & abort the process
+            if (!current)
+            {
+                cout << "List is empty." << endl;
+                return;
+            }
+            //Otherwise print out the list as usual.
             while (current) {
-                cout << setw(10) << current->name << " (" << current->color << ", " << current_age << ")" << endl;
+                cout << endl << setw(10) << current->name << " (" << current->color << ", " << current->age << ")";
                 current = current->next;
             }
-            cout << endl;
+            //Leave space for the next print entry
+            cout << endl << endl;
         }
 
+        //Define print_reverse()
         void print_reverse() {
-            cout << "Backward:" << endl;
+            //Print out a message
+            cout << "Backward: ";
+            //Like last time, use a temporary node named current, starting from the head
             Node* current = tail;
-            if (!current) return;
+            //If the list is empty, print a messsage that is empty & abort the process
+            if (!current)
+            {
+                cout << "List is empty." << endl;
+                return;
+            }
+            //Otherwise print out the list as usual.
             while (current) {
-                cout << setw(10) << current->name << " (" << current->color << ", " << current_age << ")" << endl;
+                cout << endl << setw(10) << current->name << " (" << current->color << ", " << current->age << ")";
                 current = current->prev;
             }
-            cout << endl;
+            //Leave space for the next print entry
+            cout << endl << endl;
         }
 
+        //Destructor
         ~DoublyLinkedList() {
             while (head) {
                 Node* temp = head;
@@ -199,20 +236,25 @@ int main()
     //Random seed generator
     srand(time(0));
 
+    //Define the doubly linked list
     DoublyLinkedList list;
+    //And the list's size
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
+    //Add up elements
     for (int i = 0; i < size; ++i)
         list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
-    cout << "List forward: ";
+
+    //Print the list forwards
     list.print();
 
-    cout << "List backward: ";
+    //Print the list backwards
     list.print_reverse();
 
+    //Delete the entire list
     cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
-    cout << "List forward: ";
+    //And print it
     list.print();
 
     return 0;
