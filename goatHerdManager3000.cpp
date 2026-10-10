@@ -24,10 +24,30 @@ class Goat
             "Golden", "Bronze", "Vantablack", "Chartreuse", "Pink"
         };
     public:
-        //constructor
-        Goat()
+        //Empty constructor
+        Goat() {
+            age = rand() % 20 + 1; //Set random age from 1 to 20
+            name = names[rand() % SIZE]; //Pick a random name
+            color = colors[rand() % SIZE]; //Pick a random color
+        }
+        //Partial constructor
+        Goat(int a) //Age parameter
         {
-            
+            age = a; //Set age to a
+            name = names[rand() % SIZE]; //Pick a random name
+            color = colors[rand() % SIZE]; //Pick a random color
+        }
+        Goat(int a, string n) //Age & name parameter
+        {
+            age = a; //Set age to a
+            name = n; //Set name to n
+            color = colors[rand() % SIZE]; //Pick a random color
+        }
+        //Full constructor
+        Goat(int a, string n, string c) {
+            age = a; //Set age to a
+            name = n; //Set name to n
+            color = c; //Set color to c
         }
 };
 
