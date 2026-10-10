@@ -24,6 +24,14 @@ class Goat
             "Golden", "Bronze", "Vantablack", "Chartreuse", "Pink"
         };
     public:
+        //Setters
+        void setAge(int a) { age = a; }
+        void setName(string n) { name = n; }
+        void setColor(string c) { color = c; }
+        //Getters
+        int getAge() { return age; }
+        string getName() { return name; }
+        string getColor() { return color; }
         //Empty constructor
         Goat() {
             age = rand() % 20 + 1; //Set random age from 1 to 20
@@ -56,10 +64,15 @@ class DoublyLinkedList
     private:
         struct Node {
             int data;
+            int age;
+            string name, color;
             Node* prev;
             Node* next;
-            Node(int val, Node* p = nullptr, Node* n = nullptr) {
-                data = val; 
+            Node(int val, Goat myGoat = Goat(), Node* p = nullptr, Node* n = nullptr) {
+                data = val;
+                age = myGoat.getAge();
+                name = myGoat.getName();
+                color = myGoat.getColor();
                 prev = p;
                 next = n;
             }
@@ -72,7 +85,7 @@ class DoublyLinkedList
         // constructor
         DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-        void push_back(int value) {
+        void push_back(Goat value) {
             Node* newNode = new Node(value);
             if (!tail)  // if there's no tail, the list is empty
                 head = tail = newNode;
@@ -83,7 +96,7 @@ class DoublyLinkedList
             }
         }
 
-        void push_front(int value) {
+        void push_front(Goat value) {
             Node* newNode = new Node(value);
             if (!head)  // if there's no head, the list is empty
                 head = tail = newNode;
@@ -150,20 +163,22 @@ class DoublyLinkedList
         }
 
         void print() {
+            cout << "Forward:" << endl;
             Node* current = head;
             if (!current) return;
             while (current) {
-                cout << current->data << " ";
+                cout << setw(10) << current->name << " (" << current->color << ", " << current_age << ")" << endl;
                 current = current->next;
             }
             cout << endl;
         }
 
         void print_reverse() {
+            cout << "Backward:" << endl;
             Node* current = tail;
             if (!current) return;
             while (current) {
-                cout << current->data << " ";
+                cout << setw(10) << current->name << " (" << current->color << ", " << current_age << ")" << endl;
                 current = current->prev;
             }
             cout << endl;
