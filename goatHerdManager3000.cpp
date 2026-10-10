@@ -1,7 +1,35 @@
+//COMSC-210 | Lab 21 | Eric-Giulio Hedes
 #include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int SIZE = 15, MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+
+class Goat
+{
+    private:
+        int age;
+        string name, color;
+        //Didn't use replit for this! All of those came up from my imagination, just so you know.
+        string names[SIZE] = {
+            "Billy", "Jimmy", "Bimmy", "Jilly", "Hox",
+            "Walt", "Geott", "Hally", "Geoffrey", "Pinky",
+            "Two-horned", "Maximus", "Brownie", "Donut", "Poodle"
+        };
+        string colors[SIZE] = {
+            "Blue", "Yellow", "Green", "Orange", "Red",
+            "Turquoise", "Beige", "Black", "White", "Silver",
+            "Golden", "Bronze", "Vantablack", "Chartreuse", "Pink"
+        };
+    public:
+        //constructor
+        Goat()
+        {
+            
+        }
+};
 
 class DoublyLinkedList
 {
@@ -133,6 +161,9 @@ class DoublyLinkedList
 //Start of main()
 int main()
 {
+    //Random seed generator
+    srand(time(0));
+
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
