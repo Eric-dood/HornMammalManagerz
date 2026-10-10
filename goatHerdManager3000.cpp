@@ -123,58 +123,69 @@ class DoublyLinkedList
 
         //Define insert_after()
         void insert_after(int value, int position) {
+            //Check if the position is lower than 0
             if (position < 0) {
                 cout << "Position must be >= 0." << endl;
                 return;
             }
 
+            //Set up the new node
             Node* newNode = new Node(value);
+            //If there is no head, set up both the tail & the head as the new node
             if (!head) {
                 head = tail = newNode;
                 return;
             }
-
+            //Set up a temporary head variable
             Node* temp = head;
+            //Search for the position
             for (int i = 0; i < position && temp; ++i)
                 temp = temp->next;
-
+            //If the position exceeds list size, print out a message & do not insert node.
             if (!temp) {
                 cout << "Position exceeds list size. Node not inserted.\n";
+                //Delete newNode for safety.
                 delete newNode;
                 return;
             }
 
+            //Set up the next variable equal to the temporary next element
             newNode->next = temp->next;
+            //The previous variable is also set up to be the temporary element
             newNode->prev = temp;
             if (temp->next)
                 temp->next->prev = newNode;
             else
-                tail = newNode; // Inserting at the end
+                tail = newNode; //Inserting at the end
             temp->next = newNode;
         }
 
         //Define delete_node()
         void delete_node(int value) {
-            if (!head) return; // Empty list
-
+            //If the list is empty, don't do anything but return
+            if (!head) return;
+            //Set up a temporary head object
             Node* temp = head;
+            //Use a loop to investigate through the elements if the designated element is not found yet
             while (temp && temp->data != value)
                 temp = temp->next;
-
-            if (!temp) return; // Value not found
-
+            //If the value isn't found, return
+            if (!temp) return;
+            //If the value IS foumd, search through the node to delete it
             if (temp->prev) {
                 temp->prev->next = temp->next;
             } else {
-                head = temp->next; // Deleting the head
+                head = temp->next; //Deleting the head
             }
 
+            //Also the tail
             if (temp->next) {
                 temp->next->prev = temp->prev;
             } else {
-                tail = temp->prev; // Deleting the tail
+                tail = temp->prev; //Deleting the tail
             }
 
+            //Finally, delete the temporary object
             delete temp;
         }
 
